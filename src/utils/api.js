@@ -119,3 +119,30 @@ export const createReel = async (formData) => {
     body: formData,
   });
 };
+
+// Post Interactions
+export const likePost = async (id) => {
+  return fetchAPI(`/api/core/post/${id}/like/`, { method: 'POST' });
+};
+
+export const likeReel = async (id) => {
+  return fetchAPI(`/api/core/reel/${id}/like/`, { method: 'POST' });
+};
+
+export const getPostComments = async (id) => {
+  return fetchAPI(`/api/core/postcomment/${id}/`);
+};
+
+export const addPostComment = async (id, commentText) => {
+  return fetchAPI(`/api/core/postcomment/${id}/`, {
+    method: 'POST',
+    body: JSON.stringify({ comment: commentText }),
+  });
+};
+
+export const addPostReply = async (postId, commentId, replyText) => {
+  return fetchAPI(`/api/core/postcomment/${postId}/${commentId}/`, {
+    method: 'POST',
+    body: JSON.stringify({ reply: replyText }),
+  });
+};
