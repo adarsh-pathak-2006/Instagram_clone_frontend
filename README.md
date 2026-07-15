@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# InstaClone — Full-Stack Instagram Clone
 
-## Getting Started
+A full-featured Instagram clone built with **Next.js 16** (frontend) and **Django REST Framework** (backend), featuring posts, reels, comments, likes, replies, real-time messaging, and user suggestions.
 
-First, run the development server:
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16, React, Vanilla CSS |
+| Backend | Django REST Framework, JWT Auth |
+| Database | Neon PostgreSQL |
+| Storage | Supabase S3 |
+| Deployment | Vercel (frontend) + Render (backend) |
+
+---
+
+## Features
+
+- ✅ JWT Authentication (register, login, auto token refresh)
+- ✅ Posts with image attachments
+- ✅ Reels with video uploads
+- ✅ Like / Unlike posts
+- ✅ Comments and nested replies
+- ✅ Follow / Unfollow users
+- ✅ "Suggestions for you" sidebar
+- ✅ Full messaging / DM system
+- ✅ Profile pages
+
+---
+
+## Getting Started (Local Development)
+
+### Prerequisites
+- Node.js 18+
+- A running instance of the Django backend
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/adarsh-pathak-2006/Instagram_clone_frontend.git
+cd Instagram_clone_frontend
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment
+
+```bash
+cp .env.example .env.local
+```
+
+Open `.env.local` and set:
+
+```env
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000   # or your Render backend URL
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploying to Vercel
 
-## Learn More
+1. Push the repo to GitHub.
+2. Go to [vercel.com](https://vercel.com) → **New Project** → import this repo.
+3. In **Project Settings → Environment Variables**, add:
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Value |
+|---|---|
+| `NEXT_PUBLIC_API_URL` | `https://your-backend.onrender.com` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Click **Deploy**. Done!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> **Note:** Make sure your Django backend has your Vercel domain in its `CORS_ALLOWED_ORIGINS` setting before deploying.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/
+│   ├── page.js          # Feed / Home
+│   ├── login/           # Login page
+│   ├── register/        # Register page
+│   ├── create/          # Upload post or reel
+│   ├── messages/        # DM inbox + conversation
+│   └── profile/         # User profile page
+├── components/
+│   ├── Navbar.js
+│   ├── PostCard.js      # Post with likes, comments, replies
+│   └── SuggestionSidebar.js
+└── utils/
+    └── api.js           # All API calls with JWT + auto-refresh
+```
+
+---
+
+## Backend Repository
+
+👉 [Instagram_clone_backend](https://github.com/adarsh-pathak-2006/Instagram_clone_backend)
