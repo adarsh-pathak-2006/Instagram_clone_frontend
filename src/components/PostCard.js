@@ -84,16 +84,23 @@ export default function PostCard({ post }) {
 
   const handleAddReply = async (e, commentId) => {
     e.preventDefault();
-    if (!replyText.trim()) return;
+    const textToSend = replyText.trim();
+    if (!textToSend) return;
+    
+    // Clear UI immediately so the user knows their action was received
+    setReplyText('');
+    setReplyingTo(null);
+    
     try {
-      const res = await addPostReply(post.id, commentId, replyText);
+      const res = await addPostReply(post.id, commentId, textToSend);
       if (res.ok) {
-        setReplyText('');
-        setReplyingTo(null);
-        fetchComments(); // Refresh comments to show new reply
+        // Now refresh comments to show the new reply from the server
+        await fetchComments();
+      } else {
+        console.error('Failed to post reply, status:', res.status);
       }
     } catch (err) {
-      console.error(err);
+      console.error('Reply error:', err);
     }
   };
 
