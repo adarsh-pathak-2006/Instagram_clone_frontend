@@ -35,11 +35,11 @@ export default function Home() {
 
   return (
     <div className="container main-layout" style={{ marginTop: '30px' }}>
-      <div style={{ maxWidth: '600px', margin: '0 auto', width: '100%' }}>
+      <div className="feed-column">
         {posts.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
-            <h2>No posts found.</h2>
-            <p>Follow some users to see their posts!</p>
+          <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-secondary)' }}>
+            <h2>No posts yet.</h2>
+            <p style={{ marginTop: '8px' }}>Follow some users to see their posts!</p>
           </div>
         ) : (
           posts.map(post => (
@@ -47,7 +47,7 @@ export default function Home() {
           ))
         )}
       </div>
-      <div className="sidebar" style={{ width: '320px', paddingLeft: '20px' }}>
+      <div className="sidebar-column">
         <SuggestionSidebar />
       </div>
     </div>

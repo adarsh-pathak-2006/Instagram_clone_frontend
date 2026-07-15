@@ -47,10 +47,11 @@ button {
 
 .card {
   background: var(--white);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 .btn {
@@ -193,14 +194,41 @@ button {
 
 /* Layout */
 .main-layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
   min-height: 100vh;
+}
+
+.feed-column {
+  flex: 1;
+  max-width: 614px;
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  min-height: 100vh;
+}
+
+.sidebar-column {
+  width: 320px;
+  padding-left: 28px;
+  position: sticky;
+  top: 80px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1000px) {
+  .sidebar-column {
+    display: none;
+  }
+  .feed-column {
+    max-width: 100%;
+    border: none;
+  }
 }
 
 @media (max-width: 768px) {
   .main-layout {
-    grid-template-columns: 1fr;
-    padding-bottom: 60px; /* Mobile bottom nav space */
+    flex-direction: column;
+    padding-bottom: 60px;
   }
 }
