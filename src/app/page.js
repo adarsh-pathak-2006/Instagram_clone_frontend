@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { getPosts, getReels } from '@/utils/api';
 import PostCard from '@/components/PostCard';
+import SuggestionSidebar from '@/components/SuggestionSidebar';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -46,8 +47,8 @@ export default function Home() {
           ))
         )}
       </div>
-      <div className="sidebar" style={{ display: 'none' /* Will add desktop sidebar later */ }}>
-        {/* Recommended users could go here */}
+      <div className="sidebar" style={{ width: '320px', paddingLeft: '20px' }}>
+        <SuggestionSidebar />
       </div>
     </div>
   );

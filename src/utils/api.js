@@ -14,14 +14,51 @@ export const fetchAPI = async (endpoint, options = {}) => {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
+  let response = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
     headers,
   });
 
-  // Handle unauthorized by logging out
+  // Skip interceptor for login and register endpoints so they can handle their own errors
+  if (endpoint === '/token/' || endpoint === '/register/') {
+    return response;
+  }
+
+  // Handle unauthorized by attempting token refresh
   if (response.status === 401 && typeof window !== 'undefined') {
+    const refreshToken = localStorage.getItem('refresh_token');
+    
+    // If we have a refresh token and we're not already trying to refresh (prevent infinite loops)
+    if (refreshToken && endpoint !== '/token/refresh/') {
+      try {
+        const refreshRes = await fetch(`${BASE_URL}/token/refresh/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ refresh: refreshToken }),
+        });
+
+        if (refreshRes.ok) {
+          const data = await refreshRes.json();
+          // Save new access token
+          localStorage.setItem('access_token', data.access);
+          // Update headers with new token
+          headers['Authorization'] = `Bearer ${data.access}`;
+          
+          // Retry original request
+          response = await fetch(`${BASE_URL}${endpoint}`, {
+            ...options,
+            headers,
+          });
+          return response;
+        }
+      } catch (err) {
+        console.error("Token refresh failed", err);
+      }
+    }
+    
+    // If refresh failed or no refresh token exists, log out
     localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     window.location.href = '/login';
   }
 
@@ -54,6 +91,10 @@ export const getProfile = async (id) => {
 
 export const toggleFollow = async (id) => {
   return fetchAPI(`/api/auth/follow/${id}/`, { method: 'POST' });
+};
+
+export const getSuggestions = async () => {
+  return fetchAPI('/api/auth/suggestions/');
 };
 
 // Posts & Feed

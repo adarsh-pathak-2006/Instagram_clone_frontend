@@ -4,19 +4,23 @@ export default function PostCard({ post }) {
     ? (post.attachment.startsWith('http') ? post.attachment : `http://127.0.0.1:8000${post.attachment}`)
     : null;
 
+  const displayName = post.user?.user?.username || post.user?.name || 'Unknown User';
+  const avatarUrl = post.user?.profile_picture || `https://ui-avatars.com/api/?name=${displayName}&background=random`;
+
   return (
     <article className="card">
       <div className="flex-between" style={{ padding: '14px' }}>
         <div className="flex-center" style={{ gap: '10px' }}>
           <div className="avatar-brand-ring" style={{ width: '36px', height: '36px' }}>
             <img 
-              src={post.user?.profile_picture || '/default-avatar.png'} 
-              alt={post.user?.username} 
-              style={{ width: '100%', height: '100%', display: 'block' }} 
+              src={avatarUrl} 
+              alt={displayName} 
+              style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} 
+              onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${displayName}`; }}
             />
           </div>
           <span style={{ fontWeight: 600, fontSize: '14px' }}>
-            {post.user?.username || 'Unknown User'}
+            {displayName}
           </span>
         </div>
       </div>
@@ -51,7 +55,7 @@ export default function PostCard({ post }) {
         
         <div style={{ fontSize: '14px' }}>
           <span style={{ fontWeight: 600, marginRight: '8px' }}>
-            {post.user?.username || 'Unknown User'}
+            {displayName}
           </span>
           {post.title}
         </div>

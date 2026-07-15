@@ -29,20 +29,20 @@ export default function Navbar() {
 
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           {isAuthenticated ? (
-            <>
-              <Link href="/">
-                <button style={{ fontWeight: 500 }}>Home</button>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <Link href="/" className="btn" style={{ background: 'transparent', color: 'var(--text-color)', border: 'none', fontWeight: 500 }}>
+                Home
               </Link>
-              <Link href="/create">
-                <button style={{ fontWeight: 600, color: 'var(--accent-color)' }}>+ Create</button>
+              <Link href="/create" className="btn" style={{ background: 'transparent', color: 'var(--accent-color)', border: 'none', fontWeight: 600 }}>
+                + Create
               </Link>
-              <Link href="/profile/me">
-                <button style={{ fontWeight: 500 }}>Profile</button>
+              <Link href="/profile/me" className="btn" style={{ background: 'transparent', color: 'var(--text-color)', border: 'none', fontWeight: 500 }}>
+                Profile
               </Link>
               <button onClick={handleLogout} className="btn btn-secondary">
                 Logout
               </button>
-            </>
+            </div>
           ) : (
             <>
               <Link href="/login">
