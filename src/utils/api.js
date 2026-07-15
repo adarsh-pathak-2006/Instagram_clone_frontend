@@ -146,3 +146,23 @@ export const addPostReply = async (postId, commentId, replyText) => {
     body: JSON.stringify({ reply: replyText }),
   });
 };
+
+// Messaging
+export const getChats = async () => {
+  return fetchAPI('/api/messenger/chat/');
+};
+
+export const startChat = async (profileId) => {
+  return fetchAPI(`/api/messenger/chat/start/${profileId}/`, { method: 'POST' });
+};
+
+export const getConversation = async (chatId) => {
+  return fetchAPI(`/api/messenger/chat/${chatId}/`);
+};
+
+export const sendMessage = async (chatId, message) => {
+  return fetchAPI(`/api/messenger/chat/${chatId}/`, {
+    method: 'POST',
+    body: JSON.stringify({ message }),
+  });
+};
