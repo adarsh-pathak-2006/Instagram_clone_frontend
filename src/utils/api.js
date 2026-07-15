@@ -85,6 +85,13 @@ export const getMyProfile = async () => {
   return fetchAPI('/api/auth/my-profile/');
 };
 
+export const updateProfile = async (formData) => {
+  return fetchAPI('/api/auth/my-profile/', {
+    method: 'PATCH',
+    body: formData,
+  });
+};
+
 export const getProfile = async (id) => {
   return fetchAPI(`/api/auth/path/${id}/`);
 };
